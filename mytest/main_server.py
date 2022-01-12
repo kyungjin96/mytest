@@ -1,8 +1,19 @@
 import rclpy
 from rclpy.node import Node
-import sig_fun as sig
-
 from cmakepkgg.srv import MockSensorControl
+import math
+
+
+
+def stable_sigmoid(x):    
+    if x >= 0:
+        z = math.exp(-x)
+        sig = 1 / (1 + z)
+        return sig
+    else:
+        z = math.exp(x)
+        sig = z / (1 + z)
+        return sig
 
 
 
@@ -36,8 +47,8 @@ class CustomServiceServer(Node):
             response.is_success = True
            
         elif request.sensor_id == 'sig':
-            response.sum = sig.stable_sigmoid(request.ff1)
-            self.get_logger().info('input "%s": %.2f  '% (request.sensor_id, request.ff1,))
+            response.sum = stable_sigmoid(request.ff1)
+            self.get_logger().info('input "%s": %.2f  '% (request.sensor_id, request.ff1))
             response.is_success = True
 
             
