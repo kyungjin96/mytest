@@ -21,6 +21,7 @@ setup(
         'console_scripts': [
             'main_client = mytest.main_client:main',
             'main_server = mytest.main_server:main',
+            'sig_client = mytest.sigmoid_client:main',
       
         
         ],
